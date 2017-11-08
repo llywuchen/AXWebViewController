@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import <objc/runtime.h>
+// #import "AXWebViewController.h"
 
 @interface AppDelegate ()
 
@@ -21,12 +22,29 @@
     [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithRed:0.322 green:0.322 blue:0.322 alpha:1.00],NSForegroundColorAttributeName,[UIFont boldSystemFontOfSize:16],NSFontAttributeName, nil]]; //Nav文字属性
     [[UINavigationBar appearance] setTintColor:[UIColor colorWithRed:0.322 green:0.322 blue:0.322 alpha:1.00]];
     [[UIBarButtonItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithRed:0.322 green:0.322 blue:0.322 alpha:1.00],NSForegroundColorAttributeName, [UIFont systemFontOfSize:14],NSFontAttributeName , nil] forState:0];
+    [[UIBarButtonItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:14],NSFontAttributeName , nil] forState:UIControlStateHighlighted];
     [[UINavigationBar appearance] setBackIndicatorImage:[UIImage imageNamed:@"back_indicator"]];
     [[UINavigationBar appearance] setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"back_indicator"]];
-    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -2) forBarMetrics:UIBarMetricsDefault];
+    if (@available(iOS 11.0, *)) {
+        [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(-2.0, -0.4) forBarMetrics:UIBarMetricsDefault];
+    } else {
+        [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -2) forBarMetrics:UIBarMetricsDefault];
+    }
     /*
     NSBundle *bundle = [NSBundle bundleForClass:NSClassFromString(@"AXWebViewController")];
     NSString *bundlePath = [bundle pathForResource:@"AXWebViewController.bundle/html.bundle/404" ofType:@"html"];
+     */
+    /*
+    AXWebViewController *webVC = [[AXWebViewController alloc] initWithAddress:@"https://www.baidu.com"];
+    webVC.showsToolBar = NO;
+    webVC.webView.allowsLinkPreview = YES;
+    webVC.navigationType = AXWebViewControllerNavigationBarItem;
+    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:webVC];
+    self.window = [[UIWindow alloc] init];
+    self.window.backgroundColor = [UIColor whiteColor];
+    self.window.frame = [UIScreen mainScreen].bounds;
+    self.window.rootViewController = nav;
+    [self.window makeKeyAndVisible];
      */
     
     return YES;

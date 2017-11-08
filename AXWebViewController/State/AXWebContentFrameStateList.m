@@ -1,9 +1,9 @@
 //
-//  AXWebViewControllerActivity.h
+//  AXWebContentFrameStateList.m
 //  AXWebViewController
 //
-//  Created by ai on 15/12/23.
-//  Copyright © 2015年 devedbox. All rights reserved.
+//  Created by devedbox on 2017/11/6.
+//  Copyright © 2017年 devedbox. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,15 +23,21 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-#import <UIKit/UIKit.h>
+#import "AXWebContentFrameStateList.h"
 
-
-@interface AXWebViewControllerActivity : UIActivity
-/// URL to open.
-@property (nonatomic, strong) NSURL *URL;
-/// Scheme prefix value.
-@property (nonatomic, strong) NSString *scheme;
+@interface AXWebContentFrameStateList ()
+/// The underlying managed web view.
+@property(weak, nonatomic) WKWebView *webView;
 @end
 
-@interface AXWebViewControllerActivityChrome : AXWebViewControllerActivity @end
-@interface AXWebViewControllerActivitySafari : AXWebViewControllerActivity @end
+@implementation AXWebContentFrameStateList
+- (instancetype)initWithWebView:(WKWebView *)webView {
+    if (self = [super init]) {
+        _webView = webView;
+    }
+    return self;
+}
+
+#pragma mark - Getters.
+
+@end

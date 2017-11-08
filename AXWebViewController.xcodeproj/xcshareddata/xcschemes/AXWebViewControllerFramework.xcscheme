@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "01513BEA1C28F70700CB8238"
-               BuildableName = "AXWebViewController.app"
-               BlueprintName = "AXWebViewController"
+               BlueprintIdentifier = "DCE59FE01F2194DD0057C208"
+               BuildableName = "AXWebViewController.framework"
+               BlueprintName = "AXWebViewControllerFramework"
                ReferencedContainer = "container:AXWebViewController.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -30,15 +30,6 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "01513BEA1C28F70700CB8238"
-            BuildableName = "AXWebViewController.app"
-            BlueprintName = "AXWebViewController"
-            ReferencedContainer = "container:AXWebViewController.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -53,16 +44,15 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "01513BEA1C28F70700CB8238"
-            BuildableName = "AXWebViewController.app"
-            BlueprintName = "AXWebViewController"
+            BlueprintIdentifier = "DCE59FE01F2194DD0057C208"
+            BuildableName = "AXWebViewController.framework"
+            BlueprintName = "AXWebViewControllerFramework"
             ReferencedContainer = "container:AXWebViewController.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -72,16 +62,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "01513BEA1C28F70700CB8238"
-            BuildableName = "AXWebViewController.app"
-            BlueprintName = "AXWebViewController"
+            BlueprintIdentifier = "DCE59FE01F2194DD0057C208"
+            BuildableName = "AXWebViewController.framework"
+            BlueprintName = "AXWebViewControllerFramework"
             ReferencedContainer = "container:AXWebViewController.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

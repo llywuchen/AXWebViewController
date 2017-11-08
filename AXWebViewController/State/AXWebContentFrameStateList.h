@@ -1,9 +1,9 @@
 //
-//  AXWebViewControllerActivity.h
+//  AXWebContentFrameStateList.h
 //  AXWebViewController
 //
-//  Created by ai on 15/12/23.
-//  Copyright © 2015年 devedbox. All rights reserved.
+//  Created by devedbox on 2017/11/6.
+//  Copyright © 2017年 devedbox. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,15 +23,23 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import <WebKit/WebKit.h>
+#import "AXWebContentFrameState.h"
 
+NS_ASSUME_NONNULL_BEGIN
+/// A type managing the states of each frame of wk web view, such as the latest content offset of the
+/// scroll view of the wkWebView.
+@interface AXWebContentFrameStateList : NSObject
+/// The back forward list of the managed web view.
+@property(readonly, nonatomic, nullable) WKBackForwardList *backForwardList;
+/// The current state for the current list item.
+@property(readonly, nonatomic, nullable) AXWebContentFrameState *currentState;
+/// The forward state object for the forward list item.
+@property(readonly, nonatomic, nullable) AXWebContentFrameState *forwardState;
+/// The back state for the back list item.
+@property(readonly, nonatomic, nullable) AXWebContentFrameState *backState;
 
-@interface AXWebViewControllerActivity : UIActivity
-/// URL to open.
-@property (nonatomic, strong) NSURL *URL;
-/// Scheme prefix value.
-@property (nonatomic, strong) NSString *scheme;
+- (nullable instancetype)initWithWebView:(WKWebView *)webView;
 @end
-
-@interface AXWebViewControllerActivityChrome : AXWebViewControllerActivity @end
-@interface AXWebViewControllerActivitySafari : AXWebViewControllerActivity @end
+NS_ASSUME_NONNULL_END
