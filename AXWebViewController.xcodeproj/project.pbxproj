@@ -18,7 +18,6 @@
 		01AA4F1C1D4F28DD008F2A2C /* TabbarViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = 01AA4F1B1D4F28DD008F2A2C /* TabbarViewController2.m */; };
 		01CDC1511C2A3C9100D9AF53 /* AXWebViewController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 01CDC1501C2A3C9100D9AF53 /* AXWebViewController.bundle */; };
 		01CDC15D1C2A41DF00D9AF53 /* TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01CDC15C1C2A41DF00D9AF53 /* TableViewController.m */; };
-		0A908A1E1F7CE2DB00513380 /* AXWebViewController_framework.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A908A1C1F7CE2DB00513380 /* AXWebViewController_framework.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0A908A211F7CE2DB00513380 /* AXWebViewController_framework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A908A1A1F7CE2DB00513380 /* AXWebViewController_framework.framework */; };
 		0A908A221F7CE2DB00513380 /* AXWebViewController_framework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0A908A1A1F7CE2DB00513380 /* AXWebViewController_framework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0A908A271F7CE32300513380 /* AXWebViewController.h in Sources */ = {isa = PBXBuildFile; fileRef = 01513C051C28F90000CB8238 /* AXWebViewController.h */; };
@@ -93,8 +92,6 @@
 		01CDC15C1C2A41DF00D9AF53 /* TableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewController.m; sourceTree = "<group>"; };
 		0326F0589F0B7F449EE39607 /* Pods-AXWebViewController.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AXWebViewController.release.xcconfig"; path = "Pods/Target Support Files/Pods-AXWebViewController/Pods-AXWebViewController.release.xcconfig"; sourceTree = "<group>"; };
 		0A908A1A1F7CE2DB00513380 /* AXWebViewController_framework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AXWebViewController_framework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		0A908A1C1F7CE2DB00513380 /* AXWebViewController_framework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AXWebViewController_framework.h; sourceTree = "<group>"; };
-		0A908A1D1F7CE2DB00513380 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0A908A381F7E1CAC00513380 /* libAspects.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libAspects.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A908A391F7E1CAC00513380 /* libAXIndicatorView.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libAXIndicatorView.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A908A3A1F7E1CAC00513380 /* libAXNavigationBackItemInjection.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libAXNavigationBackItemInjection.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -147,7 +144,6 @@
 			isa = PBXGroup;
 			children = (
 				01513BED1C28F70700CB8238 /* AXWebViewController */,
-				0A908A1B1F7CE2DB00513380 /* AXWebViewController-framework */,
 				01513BEC1C28F70700CB8238 /* Products */,
 				0BC220E02B437FE0466F4248 /* Pods */,
 				6757935A39C536BCAB9BA3A3 /* Frameworks */,
@@ -199,15 +195,6 @@
 				DCABA0181EC5EE2A005C7D31 /* Security */,
 			);
 			name = AXWebViewController;
-			sourceTree = "<group>";
-		};
-		0A908A1B1F7CE2DB00513380 /* AXWebViewController-framework */ = {
-			isa = PBXGroup;
-			children = (
-				0A908A1C1F7CE2DB00513380 /* AXWebViewController_framework.h */,
-				0A908A1D1F7CE2DB00513380 /* Info.plist */,
-			);
-			path = "AXWebViewController-framework";
 			sourceTree = "<group>";
 		};
 		0BC220E02B437FE0466F4248 /* Pods */ = {
@@ -294,7 +281,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0A908A1E1F7CE2DB00513380 /* AXWebViewController_framework.h in Headers */,
 				0A908A301F7CE35800513380 /* AXWebViewController.h in Headers */,
 				0A908A311F7CE35800513380 /* AXWebViewControllerActivity.h in Headers */,
 				0A908A321F7CE35800513380 /* AXSecurityPolicy.h in Headers */,
