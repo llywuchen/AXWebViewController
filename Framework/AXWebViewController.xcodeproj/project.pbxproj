@@ -11,9 +11,9 @@
 		0A96DA111FB94EE4000529C1 /* AXWebViewControllerActivity.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A96DA091FB94EE4000529C1 /* AXWebViewControllerActivity.h */; };
 		0A96DA121FB94EE4000529C1 /* AXWebViewControllerActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A96DA0A1FB94EE4000529C1 /* AXWebViewControllerActivity.m */; };
 		0A96DA131FB94EE4000529C1 /* AXWebViewController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0A96DA0B1FB94EE4000529C1 /* AXWebViewController.bundle */; };
-		0A96DA141FB94EE4000529C1 /* AXSecurityPolicy.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A96DA0D1FB94EE4000529C1 /* AXSecurityPolicy.h */; };
+		0A96DA141FB94EE4000529C1 /* AXSecurityPolicy.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A96DA0D1FB94EE4000529C1 /* AXSecurityPolicy.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0A96DA151FB94EE4000529C1 /* AXSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A96DA0E1FB94EE4000529C1 /* AXSecurityPolicy.m */; };
-		0A96DA161FB94EE4000529C1 /* AXWebViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A96DA0F1FB94EE4000529C1 /* AXWebViewController.h */; };
+		0A96DA161FB94EE4000529C1 /* AXWebViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A96DA0F1FB94EE4000529C1 /* AXWebViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0A96DA1D1FB94FE3000529C1 /* Aspects.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A96DA181FB94FE3000529C1 /* Aspects.framework */; };
 		0A96DA1E1FB94FE3000529C1 /* NJKWebViewProgress.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A96DA191FB94FE3000529C1 /* NJKWebViewProgress.framework */; };
 		0A96DA1F1FB94FE3000529C1 /* AXIndicatorView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A96DA1A1FB94FE3000529C1 /* AXIndicatorView.framework */; };
@@ -124,8 +124,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				0A96DA161FB94EE4000529C1 /* AXWebViewController.h in Headers */,
-				0A96DA111FB94EE4000529C1 /* AXWebViewControllerActivity.h in Headers */,
 				0A96DA141FB94EE4000529C1 /* AXSecurityPolicy.h in Headers */,
+				0A96DA111FB94EE4000529C1 /* AXWebViewControllerActivity.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
