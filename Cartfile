@@ -1,0 +1,5 @@
+git "https://github.com/llywuchen/AXNavigationBackItemInjection.git" "master"
+git "https://github.com/llywuchen/NJKWebViewProgress.git" "master"
+git "https://github.com/devedbox/AXPracticalHUD.git" "master"
+git "https://github.com/devedbox/AXIndicatorView.git" "master"
+git "https://github.com/steipete/Aspects.git" "master"
