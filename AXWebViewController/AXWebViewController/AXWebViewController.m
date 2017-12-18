@@ -335,8 +335,8 @@ BOOL AX_WEB_VIEW_CONTROLLER_iOS10_0_AVAILABLE() { return AX_WEB_VIEW_CONTROLLER_
     self.progressView.progressBarView.backgroundColor = self.navigationController.navigationBar.tintColor;
 #else
     self.view.backgroundColor = [UIColor whiteColor];
-    self.progressView.progressTintColor = self.navigationController.navigationBar.tintColor;
-    [_webView addObserver:self forKeyPath:@"estimatedProgress" options:NSKeyValueObservingOptionNew context:NULL];
+//    self.progressView.progressTintColor = self.navigationController.navigationBar.tintColor;
+//    [_webView addObserver:self forKeyPath:@"estimatedProgress" options:NSKeyValueObservingOptionNew context:NULL];
     
     // [_webView.scrollView addObserver:self forKeyPath:@"backgroundColor" options:NSKeyValueObservingOptionNew context:NULL];
 #endif
@@ -481,7 +481,7 @@ BOOL AX_WEB_VIEW_CONTROLLER_iOS10_0_AVAILABLE() { return AX_WEB_VIEW_CONTROLLER_
 #if AX_WEB_VIEW_CONTROLLER_USING_WEBKIT
     _webView.UIDelegate = nil;
     _webView.navigationDelegate = nil;
-    [_webView removeObserver:self forKeyPath:@"estimatedProgress"];
+//    [_webView removeObserver:self forKeyPath:@"estimatedProgress"];
     [_webView removeObserver:self forKeyPath:@"scrollView.contentOffset"];
     [_webView removeObserver:self forKeyPath:@"title"];
     // [_webView.scrollView removeObserver:self forKeyPath:@"backgroundColor"];
