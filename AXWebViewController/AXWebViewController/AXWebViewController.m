@@ -35,6 +35,12 @@
 NSLocalizedStringFromTableInBundle(key, @"AXWebViewController", self.resourceBundle, comment)
 #endif
 #if !AX_WEB_VIEW_CONTROLLER_USING_WEBKIT
+
+typedef struct {
+    char *identifier;
+    CGPoint contentOffset;
+} _AXWebViewFrameState;
+
 @interface _AXWebViewProgressView : NJKWebViewProgressView
 /// The view controller controller.
 @property(weak, nonatomic) AXWebViewController *webViewController;
@@ -61,6 +67,8 @@ NSLocalizedStringFromTableInBundle(key, @"AXWebViewController", self.resourceBun
     
     /// Should adjust the content inset of web view.
     BOOL _automaticallyAdjustsScrollViewInsets;
+    /// Cached content offset state of the web view.
+    NSCache *_contentOffsetCache;
 }
 /// Back bar button item of tool bar.
 @property(strong, nonatomic) UIBarButtonItem *backBarButtonItem;
@@ -206,6 +214,21 @@ BOOL AX_WEB_VIEW_CONTROLLER_iOS10_0_AVAILABLE() { return AX_WEB_VIEW_CONTROLLER_
 
 #pragma clang diagnostic pop
 
+@interface UIScrollView (ContentOffsetHook)
+@end
+
+@implementation UIScrollView (ContentOffsetHook)
++ (void)load {
+    Method original = class_getInstanceMethod(self.class, @selector(setContentOffset:));
+    Method target   = class_getInstanceMethod(self.class, @selector(ax_setContentOffset:));
+    method_exchangeImplementations(original, target);
+}
+
+- (void)ax_setContentOffset:(CGPoint)contentOffset {
+    [self ax_setContentOffset:contentOffset];
+}
+@end
+
 @implementation AXWebViewController
 #pragma mark - Life cycle
 - (instancetype)init {
@@ -319,7 +342,7 @@ BOOL AX_WEB_VIEW_CONTROLLER_iOS10_0_AVAILABLE() { return AX_WEB_VIEW_CONTROLLER_
         [self loadURLRequest:_request];
     } else if (_URL) {
         [self loadURL:_URL];
-    } else if (_baseURL && _HTMLString) {
+    } else if (/*_baseURL && */_HTMLString) {
         [self loadHTMLString:_HTMLString baseURL:_baseURL];
     } else {
         // Handle none resource case.
@@ -1118,7 +1141,7 @@ BOOL AX_WEB_VIEW_CONTROLLER_iOS10_0_AVAILABLE() { return AX_WEB_VIEW_CONTROLLER_
 #endif
 }
 
-- (void)actionButtonClicked:(id)sender {
+- (void)actionButtonClicked:(UIBarButtonItem *)sender {
     NSArray *activities = @[[AXWebViewControllerActivitySafari new], [AXWebViewControllerActivityChrome new]];
     NSURL *URL;
 #if AX_WEB_VIEW_CONTROLLER_USING_WEBKIT
@@ -1126,7 +1149,14 @@ BOOL AX_WEB_VIEW_CONTROLLER_iOS10_0_AVAILABLE() { return AX_WEB_VIEW_CONTROLLER_
 #else
     URL = _webView.request.URL;
 #endif
+    
     UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[URL] applicationActivities:activities];
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        UIPopoverPresentationController *popover = activityController.popoverPresentationController;
+        popover.barButtonItem = sender;
+        popover.permittedArrowDirections = UIPopoverArrowDirectionAny;
+    }
+    
     [self presentViewController:activityController animated:YES completion:nil];
 }
 
@@ -1309,7 +1339,6 @@ BOOL AX_WEB_VIEW_CONTROLLER_iOS10_0_AVAILABLE() { return AX_WEB_VIEW_CONTROLLER_
             }
         }
         if ([[UIApplication sharedApplication] canOpenURL:components.URL]) {
-            
             if (@available(iOS 10.0, *)) {
                 [UIApplication.sharedApplication openURL:components.URL options:@{} completionHandler:NULL];
             } else {
@@ -1319,12 +1348,11 @@ BOOL AX_WEB_VIEW_CONTROLLER_iOS10_0_AVAILABLE() { return AX_WEB_VIEW_CONTROLLER_
         decisionHandler(WKNavigationActionPolicyCancel);
         return;
     } else if (![[NSPredicate predicateWithFormat:@"SELF MATCHES[cd] 'https' OR SELF MATCHES[cd] 'http' OR SELF MATCHES[cd] 'file' OR SELF MATCHES[cd] 'about'"] evaluateWithObject:components.scheme]) {// For any other schema but not `https`、`http` and `file`.
-        
         if (@available(iOS 8.0, *)) { // openURL if ios version is low then 8 , app will crash
             if (!self.checkUrlCanOpen || [[UIApplication sharedApplication] canOpenURL:components.URL]) {
                 if (@available(iOS 10.0, *)) {
                     [UIApplication.sharedApplication openURL:components.URL options:@{} completionHandler:NULL];
-                }else{
+                } else {
                     [[UIApplication sharedApplication] openURL:components.URL];
                 }
             }
@@ -1334,13 +1362,12 @@ BOOL AX_WEB_VIEW_CONTROLLER_iOS10_0_AVAILABLE() { return AX_WEB_VIEW_CONTROLLER_
             }
         }
 
-        
         decisionHandler(WKNavigationActionPolicyCancel);
         return;
     }
     
     // URL actions for 404 and Errors:
-    if ([navigationAction.request.URL.absoluteString isEqualToString:kAX404NotFoundURLKey] || [navigationAction.request.URL.absoluteString isEqualToString:kAXNetworkErrorURLKey]) {
+    if ([[NSPredicate predicateWithFormat:@"SELF ENDSWITH[cd] %@ OR SELF ENDSWITH[cd] %@", kAX404NotFoundURLKey, kAXNetworkErrorURLKey] evaluateWithObject:components.URL.absoluteString]) {
         // Reload the original URL.
         [self loadURL:_URL];
     }
