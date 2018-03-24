@@ -1,9 +1,6 @@
 PODS:
   - Aspects (1.4.1)
-  - AXIndicatorView (0.1.1)
   - AXNavigationBackItemInjection (0.0.2)
-  - AXPracticalHUD (1.1.6):
-    - AXIndicatorView
   - NJKWebViewProgress (0.2.3):
     - NJKWebViewProgress/Core (= 0.2.3)
     - NJKWebViewProgress/ProgressView (= 0.2.3)
@@ -13,26 +10,13 @@ PODS:
 DEPENDENCIES:
   - Aspects (= 1.4.1)
   - AXNavigationBackItemInjection (= 0.0.2)
-  - AXPracticalHUD (from `https://github.com/llywuchen/AXPracticalHUD.git`, branch `hjs`)
   - NJKWebViewProgress (= 0.2.3)
-
-EXTERNAL SOURCES:
-  AXPracticalHUD:
-    :branch: hjs
-    :git: https://github.com/llywuchen/AXPracticalHUD.git
-
-CHECKOUT OPTIONS:
-  AXPracticalHUD:
-    :commit: 10e744c176c79418153d48778ff4bfc0ee03c2c9
-    :git: https://github.com/llywuchen/AXPracticalHUD.git
 
 SPEC CHECKSUMS:
   Aspects: 7595ba96a6727a58ebcbfc954497fc5d2fdde546
-  AXIndicatorView: 566b490a2dd9781d4ffbcc9752be9b9cdc6e728e
   AXNavigationBackItemInjection: efe0446967f3cbcc85a9118decd1e145138912dd
-  AXPracticalHUD: eba707b5515a4da7424ac3d36f07e643df1c8fc3
   NJKWebViewProgress: f481fd424cb5ecc27eacae11b5397db92fba9a4d
 
-PODFILE CHECKSUM: 05531428e9e9aa6da863f23b670d80eca5271073
+PODFILE CHECKSUM: ab4dce868c550caa717a358277427704121b444a
 
 COCOAPODS: 1.4.0.beta.2

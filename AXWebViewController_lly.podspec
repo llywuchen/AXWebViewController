@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
 #  summary should be tweet-length, and the description more in depth.
 #
 
-s.name         = "AXWebViewController"
+s.name         = "AXWebViewController_lly"
 s.version      = "0.7.1"
 s.summary      = "A light weight web view controller in iOS."
 
@@ -31,7 +31,7 @@ A multi style picker view in iOS.
 * Try to keep it short, snappy and to the point.
 * Finally, don't worry about the indent, CocoaPods strips it!
 DESC
-s.homepage     = "https://github.com/devedbox/AXWebViewController"
+s.homepage     = "https://github.com/llywuchen/AXWebViewController"
 # s.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
 
 
@@ -56,9 +56,9 @@ s.license      = "MIT"
 #  profile URL.
 #
 
-s.author             = { "艾星" => "862099730@qq.com" }
+s.author             = { "llywuchen" => "576061110@qq.com" }
 # Or just: s.author    = "aiXing"
-# s.authors            = { "aiXing" => "862099730@qq.com" }
+# s.authors            = { "aiXing" => "576061110@qq.com" }
 # s.social_media_url   = "http://twitter.com/aiXing"
 
 # ――― Platform Specifics ――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -83,7 +83,7 @@ s.platform     = :ios, "7.0"
 #  Supports git, hg, bzr, svn and HTTP.
 #
 
-s.source       = { :git => "https://github.com/devedbox/AXWebViewController.git", :tag => s.version }
+s.source       = { :git => "https://github.com/llywuchen/AXWebViewController.git", :tag => s.version }
 
 
 # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
