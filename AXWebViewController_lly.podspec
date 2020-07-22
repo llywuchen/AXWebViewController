@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
 #
 
 s.name         = "AXWebViewController_lly"
-s.version      = "0.7.4"
+s.version      = "0.7.5"
 s.summary      = "A light weight web view controller in iOS."
 
 # This description is used to generate tags and improve search results.
@@ -68,7 +68,7 @@ s.author             = { "llywuchen" => "576061110@qq.com" }
 #
 
 # s.platform     = :ios
-s.platform     = :ios, "7.0"
+s.platform     = :ios, "9.0"
 
 #  When using multiple platforms
 # s.ios.deployment_target = "5.0"
@@ -138,8 +138,8 @@ s.requires_arc = true
 # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
 # s.dependency "JSONKit", "~> 1.4"
 #s.dependency "AXPracticalHUD"
-s.dependency "AXNavigationBackItemInjection"
-s.dependency "NJKWebViewProgress"
-s.dependency "Aspects"
+#s.dependency "AXNavigationBackItemInjection"
+#s.dependency "NJKWebViewProgress"
+#s.dependency "Aspects"
 
 end
