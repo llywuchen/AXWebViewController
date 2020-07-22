@@ -25,7 +25,7 @@
 
 #import "AXWebViewController.h"
 #import "AXWebViewControllerActivity.h"
-#import <Aspects/Aspects.h>
+//#import <Aspects/Aspects.h>
 #import <objc/runtime.h>
 #import <StoreKit/StoreKit.h>
 //#import <AXPracticalHUD/AXPracticalHUD.h>
@@ -34,32 +34,18 @@
 #define AXWebViewControllerLocalizedString(key, comment) \
 NSLocalizedStringFromTableInBundle(key, @"AXWebViewController", self.resourceBundle, comment)
 #endif
-#if !AX_WEB_VIEW_CONTROLLER_USING_WEBKIT
 
-typedef struct {
-    char *identifier;
-    CGPoint contentOffset;
-} _AXWebViewFrameState;
-
-@interface _AXWebViewProgressView : NJKWebViewProgressView
-/// The view controller controller.
-@property(weak, nonatomic) AXWebViewController *webViewController;
-@end
-#endif
-
-@interface AXWebViewController ()<NJKWebViewProgressDelegate, SKStoreProductViewControllerDelegate>
+@interface AXWebViewController ()<SKStoreProductViewControllerDelegate>
 {
     BOOL _loading;
     UIBarButtonItem * __weak _doneItem;
     
     NSString *_HTMLString;
     NSURL *_baseURL;
-#if AX_WEB_VIEW_CONTROLLER_USING_WEBKIT
     WKWebViewConfiguration *_configuration;
     
     WKWebViewDidReceiveAuthenticationChallengeHandler _challengeHandler;
     AXSecurityPolicy *_securityPolicy;
-#endif
     
     NSURLRequest *_request;
     /// Located bundle storage.
@@ -86,29 +72,9 @@ typedef struct {
 @property(strong, nonatomic) UIBarButtonItem *navigationCloseBarButtonItem;
 /// URL from label.
 @property(strong, nonatomic) UILabel *backgroundLabel;
-#if !AX_WEB_VIEW_CONTROLLER_USING_WEBKIT
-/// Progress proxy of progress.
-@property(strong, nonatomic) NJKWebViewProgress *progressProxy;
-/// Progress view to show progress of requests.
-@property(strong, nonatomic) _AXWebViewProgressView *progressView;
-/// Array that hold snapshots of pages.
-@property(strong, nonatomic) NSMutableArray* snapshots;
-/// Current snapshotview displaying on screen when start swiping.
-@property(strong, nonatomic) UIView* currentSnapshotView;
-/// Previous snapshotview.
-@property(strong, nonatomic) UIView* previousSnapshotView;
-/// Background alpha black view.
-@property(strong, nonatomic) UIView* swipingBackgoundView;
-/// Left pan ges.
-@property(strong, nonatomic) UIPanGestureRecognizer* swipePanGesture;
-/// If is swiping now.
-@property(assign, nonatomic)BOOL isSwipingBack;
-/// Updating timer.
-@property(strong, nonatomic) NSTimer *updating;
-#endif
+
 @end
 
-#if AX_WEB_VIEW_CONTROLLER_USING_WEBKIT
 @interface UIProgressView (WebKit)
 /// Hidden when progress approach 1.0 Default is NO.
 @property(assign, nonatomic) BOOL ax_hiddenWhenProgressApproachFullSize;
@@ -145,7 +111,6 @@ typedef struct {
     return [super hitTest:point withEvent:event];
 }
 @end
-#endif
 
 // Fixed issue: https://github.com/devedbox/AXWebViewController/issues/21
 #ifndef kAX404NotFoundHTMLPath
@@ -161,9 +126,9 @@ static NSString *const kAXNetworkErrorURLKey = @"ax_network_error";
 /// Tag value for container view.
 static NSUInteger const kContainerViewTag = 0x893147;
 
-static NSUInteger const _kiOS8_0 = 8000;
-static NSUInteger const _kiOS9_0 = 9000;
-static NSUInteger const _kiOS10_0 = 10000;
+//static NSUInteger const _kiOS8_0 = 8000;
+//static NSUInteger const _kiOS9_0 = 9000;
+//static NSUInteger const _kiOS10_0 = 10000;
 
 #ifndef kAX_WEB_VIEW_CONTROLLER_DEBUG_LOGGING
 #define kAX_WEB_VIEW_CONTROLLER_DEBUG_LOGGING 0
@@ -201,16 +166,16 @@ static inline BOOL AX_WEB_VIEW_CONTROLLER_AVAILABLE_ON(NSUInteger plfm) {
 }
 
 static inline BOOL AX_WEB_VIEW_CONTROLLER_NEED_USING_WEB_KIT() {
-    return AX_WEB_VIEW_CONTROLLER_AVAILABLE_ON(_kiOS8_0);
+    return YES;
 }
 
 static inline BOOL AX_WEB_VIEW_CONTROLLER_NOT_USING_WEB_KIT() {
-    return !AX_WEB_VIEW_CONTROLLER_NEED_USING_WEB_KIT();
+    return NO;
 }
 
-BOOL AX_WEB_VIEW_CONTROLLER_iOS8_0_AVAILABLE() { return AX_WEB_VIEW_CONTROLLER_AVAILABLE_ON(_kiOS8_0); }
-BOOL AX_WEB_VIEW_CONTROLLER_iOS9_0_AVAILABLE() { return AX_WEB_VIEW_CONTROLLER_AVAILABLE_ON(_kiOS9_0); }
-BOOL AX_WEB_VIEW_CONTROLLER_iOS10_0_AVAILABLE() { return AX_WEB_VIEW_CONTROLLER_AVAILABLE_ON(_kiOS10_0); }
+//BOOL AX_WEB_VIEW_CONTROLLER_iOS8_0_AVAILABLE() { return AX_WEB_VIEW_CONTROLLER_AVAILABLE_ON(_kiOS8_0); }
+//BOOL AX_WEB_VIEW_CONTROLLER_iOS9_0_AVAILABLE() { return AX_WEB_VIEW_CONTROLLER_AVAILABLE_ON(_kiOS9_0); }
+//BOOL AX_WEB_VIEW_CONTROLLER_iOS10_0_AVAILABLE() { return AX_WEB_VIEW_CONTROLLER_AVAILABLE_ON(_kiOS10_0); }
 
 #pragma clang diagnostic pop
 
@@ -292,7 +257,6 @@ BOOL AX_WEB_VIEW_CONTROLLER_iOS10_0_AVAILABLE() { return AX_WEB_VIEW_CONTROLLER_
     return self;
 }
 
-#if AX_WEB_VIEW_CONTROLLER_USING_WEBKIT
 - (instancetype)initWithURL:(NSURL *)URL configuration:(WKWebViewConfiguration *)configuration {
     if (self = [self initWithURL:URL]) {
         _configuration = configuration;
@@ -307,7 +271,6 @@ BOOL AX_WEB_VIEW_CONTROLLER_iOS10_0_AVAILABLE() { return AX_WEB_VIEW_CONTROLLER_
     }
     return self;
 }
-#endif
 
 - (instancetype)initWithHTMLString:(NSString *)HTMLString baseURL:(NSURL *)baseURL {
     if (self = [self init]) {
@@ -352,17 +315,11 @@ BOOL AX_WEB_VIEW_CONTROLLER_iOS10_0_AVAILABLE() { return AX_WEB_VIEW_CONTROLLER_
     // Config navigation item
     self.navigationItem.leftItemsSupplementBackButton = YES;
     
-#if !AX_WEB_VIEW_CONTROLLER_USING_WEBKIT
-    [self progressProxy];
-    self.view.backgroundColor = [UIColor colorWithRed:0.180 green:0.192 blue:0.196 alpha:1.00];
-    self.progressView.progressBarView.backgroundColor = self.navigationController.navigationBar.tintColor;
-#else
     self.view.backgroundColor = [UIColor whiteColor];
 //    self.progressView.progressTintColor = self.navigationController.navigationBar.tintColor;
 //    [_webView addObserver:self forKeyPath:@"estimatedProgress" options:NSKeyValueObservingOptionNew context:NULL];
     
     // [_webView.scrollView addObserver:self forKeyPath:@"backgroundColor" options:NSKeyValueObservingOptionNew context:NULL];
-#endif
 }
 
 - (void)viewDidLayoutSubviews {
@@ -451,17 +408,17 @@ BOOL AX_WEB_VIEW_CONTROLLER_iOS10_0_AVAILABLE() { return AX_WEB_VIEW_CONTROLLER_
     [super viewDidDisappear:animated];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-        return YES;
-    
-    return toInterfaceOrientation != UIInterfaceOrientationPortraitUpsideDown;
-}
-
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-    if (_navigationType == AXWebViewControllerNavigationBarItem) [self updateNavigationItems];
-}
+//- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
+//    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+//        return YES;
+//
+//    return toInterfaceOrientation != UIInterfaceOrientationPortraitUpsideDown;
+//}
+//
+//- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+//    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+//    if (_navigationType == AXWebViewControllerNavigationBarItem) [self updateNavigationItems];
+//}
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
     if ([super respondsToSelector:@selector(viewWillTransitionToSize:withTransitionCoordinator:)]) {
@@ -501,16 +458,12 @@ BOOL AX_WEB_VIEW_CONTROLLER_iOS10_0_AVAILABLE() { return AX_WEB_VIEW_CONTROLLER_
 - (void)dealloc {
     [_webView stopLoading];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-#if AX_WEB_VIEW_CONTROLLER_USING_WEBKIT
     _webView.UIDelegate = nil;
     _webView.navigationDelegate = nil;
 //    [_webView removeObserver:self forKeyPath:@"estimatedProgress"];
     [_webView removeObserver:self forKeyPath:@"scrollView.contentOffset"];
     [_webView removeObserver:self forKeyPath:@"title"];
     // [_webView.scrollView removeObserver:self forKeyPath:@"backgroundColor"];
-#else
-    _webView.delegate = nil;
-#endif
 #if kAX_WEB_VIEW_CONTROLLER_DEBUG_LOGGING
     NSLog(@"One of AXWebViewController's instances was destroyed.");
 #endif
@@ -575,7 +528,6 @@ BOOL AX_WEB_VIEW_CONTROLLER_iOS10_0_AVAILABLE() { return AX_WEB_VIEW_CONTROLLER_
 }
 
 #pragma mark - Getters
-#if AX_WEB_VIEW_CONTROLLER_USING_WEBKIT
 - (WKWebView *)webView {
     if (_webView) return _webView;
     WKWebViewConfiguration *config = _configuration;
@@ -602,10 +554,6 @@ BOOL AX_WEB_VIEW_CONTROLLER_iOS10_0_AVAILABLE() { return AX_WEB_VIEW_CONTROLLER_
            if ( [config respondsToSelector:@selector(setRequiresUserActionForMediaPlayback:)]) {
                 [config setRequiresUserActionForMediaPlayback:NO];
            }
-        } else {
-            if ( [config respondsToSelector:@selector(setMediaPlaybackRequiresUserAction:)]) {
-                [config setMediaPlaybackRequiresUserAction:NO];
-            }
         }
         
     }
@@ -640,18 +588,6 @@ BOOL AX_WEB_VIEW_CONTROLLER_iOS10_0_AVAILABLE() { return AX_WEB_VIEW_CONTROLLER_
 }
 
 - (UIView *)containerView { return [self.view viewWithTag:kContainerViewTag]; }
-#else
-- (UIWebView*)webView {
-    if (_webView) return _webView;
-    _webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
-    _webView.backgroundColor = [UIColor clearColor];
-    _webView.delegate = self;
-    _webView.scalesPageToFit = YES;
-    [_webView addGestureRecognizer:self.swipePanGesture];
-    _webView.translatesAutoresizingMaskIntoConstraints = NO;
-    return _webView;
-}
-#endif
 
 - (NSBundle *)resourceBundle{
     if (_resourceBundle) return _resourceBundle;
@@ -765,28 +701,6 @@ BOOL AX_WEB_VIEW_CONTROLLER_iOS10_0_AVAILABLE() { return AX_WEB_VIEW_CONTROLLER_
 - (UIBarButtonItem *)navigationCloseItem {
     return _navigationCloseBarButtonItem;
 }
-#if !AX_WEB_VIEW_CONTROLLER_USING_WEBKIT
-- (NJKWebViewProgress *)progressProxy {
-    if (_progressProxy) return _progressProxy;
-    _progressProxy = [[NJKWebViewProgress alloc] init];
-    self.webView.delegate = _progressProxy;
-    _progressProxy.webViewProxyDelegate = self;
-    _progressProxy.progressDelegate = self;
-    return _progressProxy;
-}
-
-- (_AXWebViewProgressView *)progressView {
-    if (_progressView) return _progressView;
-    CGFloat progressBarHeight = 2.0f;
-    CGRect navigationBarBounds = self.navigationController.navigationBar.bounds;
-    CGRect barFrame = CGRectMake(0, navigationBarBounds.size.height - progressBarHeight, navigationBarBounds.size.width, progressBarHeight);
-    _progressView = [[_AXWebViewProgressView alloc] initWithFrame:barFrame];
-    _progressView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
-    // Set the web view controller to progress view.
-    _progressView.webViewController = self;
-    return _progressView;
-}
-#endif
 
 - (UILabel *)backgroundLabel {
     if (_backgroundLabel) return _backgroundLabel;
@@ -810,38 +724,8 @@ BOOL AX_WEB_VIEW_CONTROLLER_iOS10_0_AVAILABLE() { return AX_WEB_VIEW_CONTROLLER_
     return self.backgroundLabel;
 }
 
-#if !AX_WEB_VIEW_CONTROLLER_USING_WEBKIT
--(UIView*)swipingBackgoundView{
-    if (!_swipingBackgoundView) {
-        _swipingBackgoundView = [[UIView alloc] initWithFrame:self.view.bounds];
-        _swipingBackgoundView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.3];
-    }
-    return _swipingBackgoundView;
-}
 
--(NSMutableArray*)snapshots{
-    if (!_snapshots) {
-        _snapshots = [NSMutableArray array];
-    }
-    return _snapshots;
-}
-
--(BOOL)isSwipingBack{
-    if (!_isSwipingBack) {
-        _isSwipingBack = NO;
-    }
-    return _isSwipingBack;
-}
-
--(UIPanGestureRecognizer*)swipePanGesture{
-    if (!_swipePanGesture) {
-        _swipePanGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(swipePanGestureHandler:)];
-    }
-    return _swipePanGesture;
-}
-#endif
 #pragma mark - Setter
-#if AX_WEB_VIEW_CONTROLLER_USING_WEBKIT
 - (void)setEnabledWebViewUIDelegate:(BOOL)enabledWebViewUIDelegate {
     _enabledWebViewUIDelegate = enabledWebViewUIDelegate;
     if (@available(iOS 8.0, *)) {
@@ -852,33 +736,20 @@ BOOL AX_WEB_VIEW_CONTROLLER_iOS10_0_AVAILABLE() { return AX_WEB_VIEW_CONTROLLER_
         }
     }
 }
-#endif
 - (void)setTimeoutInternal:(NSTimeInterval)timeoutInternal {
     _timeoutInternal = timeoutInternal;
-#if AX_WEB_VIEW_CONTROLLER_USING_WEBKIT
     NSMutableURLRequest *request = [_request mutableCopy];
     request.timeoutInterval = _timeoutInternal;
     _navigation = [_webView loadRequest:request];
     _request = [request copy];
-#else
-    NSMutableURLRequest *request = [self.webView.request mutableCopy];
-    request.timeoutInterval = _timeoutInternal;
-    [_webView loadRequest:request];
-#endif
 }
 
 - (void)setCachePolicy:(NSURLRequestCachePolicy)cachePolicy {
     _cachePolicy = cachePolicy;
-#if AX_WEB_VIEW_CONTROLLER_USING_WEBKIT
     NSMutableURLRequest *request = [_request mutableCopy];
     request.cachePolicy = _cachePolicy;
     _navigation = [_webView loadRequest:request];
     _request = [request copy];
-#else
-    NSMutableURLRequest *request = [self.webView.request mutableCopy];
-    request.cachePolicy = _cachePolicy;
-    [_webView loadRequest:request];
-#endif
 }
 
 - (void)setShowsToolBar:(BOOL)showsToolBar {
@@ -917,30 +788,18 @@ BOOL AX_WEB_VIEW_CONTROLLER_iOS10_0_AVAILABLE() { return AX_WEB_VIEW_CONTROLLER_
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:pageURL];
     request.timeoutInterval = _timeoutInternal;
     request.cachePolicy = _cachePolicy;
-#if AX_WEB_VIEW_CONTROLLER_USING_WEBKIT
     _navigation = [_webView loadRequest:request];
-#else
-    [_webView loadRequest:request];
-#endif
 }
 
 - (void)loadURLRequest:(NSURLRequest *)request {
     NSMutableURLRequest *__request = [request mutableCopy];
-#if AX_WEB_VIEW_CONTROLLER_USING_WEBKIT
     _navigation = [_webView loadRequest:__request];
-#else
-    [_webView loadRequest:__request];
-#endif
 }
 
 - (void)loadHTMLString:(NSString *)HTMLString baseURL:(NSURL *)baseURL {
     _baseURL = baseURL;
     _HTMLString = HTMLString;
-#if AX_WEB_VIEW_CONTROLLER_USING_WEBKIT
     _navigation = [_webView loadHTMLString:HTMLString baseURL:baseURL];
-#else
-    [_webView loadHTMLString:HTMLString baseURL:baseURL];
-#endif
 }
 - (void)willGoBack{
     if (_delegate && [_delegate respondsToSelector:@selector(webViewControllerWillGoBack:)]) {
@@ -972,16 +831,11 @@ BOOL AX_WEB_VIEW_CONTROLLER_iOS10_0_AVAILABLE() { return AX_WEB_VIEW_CONTROLLER_
     if (_navigationType == AXWebViewControllerNavigationToolItem) {
         [self updateToolbarItems];
     }
-#if !AX_WEB_VIEW_CONTROLLER_USING_WEBKIT
-    _progressView.progress = 0.0;
-    _updating = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(updatingProgress:) userInfo:nil repeats:YES];
-#endif
     if (_delegate && [_delegate respondsToSelector:@selector(webViewControllerDidStartLoad:)]) {
         [_delegate webViewControllerDidStartLoad:self];
     }
     _loading = YES;
 }
-#if AX_WEB_VIEW_CONTROLLER_USING_WEBKIT
 - (void)didStartLoadWithNavigation:(WKNavigation *)navigation {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
@@ -990,7 +844,6 @@ BOOL AX_WEB_VIEW_CONTROLLER_iOS10_0_AVAILABLE() { return AX_WEB_VIEW_CONTROLLER_
     // FIXME: Handle the navigation of WKWebView.
     // ...
 }
-#endif
 /// Did start load.
 /// @param object Any object. WKNavigation if using WebKit.
 - (void)_didStartLoadWithObj:(id)object {
@@ -1009,13 +862,11 @@ BOOL AX_WEB_VIEW_CONTROLLER_iOS10_0_AVAILABLE() { return AX_WEB_VIEW_CONTROLLER_
 }
 
 - (void)didFinishLoad{
-#if AX_WEB_VIEW_CONTROLLER_USING_WEBKIT
     @try {
-        [self hookWebContentCommitPreviewHandler];
+//        [self hookWebContentCommitPreviewHandler];
     } @catch (NSException *exception) {
     } @finally {
     }
-#endif
     
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     if (_navigationType == AXWebViewControllerNavigationBarItem) {
@@ -1030,24 +881,12 @@ BOOL AX_WEB_VIEW_CONTROLLER_iOS10_0_AVAILABLE() { return AX_WEB_VIEW_CONTROLLER_
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     NSString *bundle = ([infoDictionary objectForKey:@"CFBundleDisplayName"]?:[infoDictionary objectForKey:@"CFBundleName"])?:[infoDictionary objectForKey:@"CFBundleIdentifier"];
     NSString *host;
-#if AX_WEB_VIEW_CONTROLLER_USING_WEBKIT
     host = _webView.URL.host;
-#else
-    host = _webView.request.URL.host;
-#endif
     _backgroundLabel.text = [NSString stringWithFormat:@"%@\"%@\"%@.", AXWebViewControllerLocalizedString(@"web page",@""), host?:bundle, AXWebViewControllerLocalizedString(@"provided",@"")];
     if (_delegate && [_delegate respondsToSelector:@selector(webViewControllerDidFinishLoad:)]) {
         [_delegate webViewControllerDidFinishLoad:self];
     }
     _loading = NO;
-#if !AX_WEB_VIEW_CONTROLLER_USING_WEBKIT
-    [_progressView setProgress:0.9 animated:YES];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        if (_progressView.progress != 1.0) {
-            [_progressView setProgress:1.0 animated:YES];
-        }
-    });
-#endif
 }
 
 - (void)didFailLoadWithError:(NSError *)error{
@@ -1102,53 +941,29 @@ BOOL AX_WEB_VIEW_CONTROLLER_iOS10_0_AVAILABLE() { return AX_WEB_VIEW_CONTROLLER_
 #pragma mark - Actions
 - (void)goBackClicked:(UIBarButtonItem *)sender {
     [self willGoBack];
-#if AX_WEB_VIEW_CONTROLLER_USING_WEBKIT
     if ([_webView canGoBack]) {
         _navigation = [_webView goBack];
     }
-#else
-    if ([_webView canGoBack]) {
-        [_webView goBack];
-    }
-#endif
 }
 - (void)goForwardClicked:(UIBarButtonItem *)sender {
     [self willGoForward];
-#if AX_WEB_VIEW_CONTROLLER_USING_WEBKIT
     if ([_webView canGoForward]) {
         _navigation = [_webView goForward];
     }
-#else
-    if ([_webView canGoForward]) {
-        [_webView goForward];
-    }
-#endif
 }
 - (void)reloadClicked:(UIBarButtonItem *)sender {
     [self willReload];
-#if AX_WEB_VIEW_CONTROLLER_USING_WEBKIT
     _navigation = [_webView reload];
-#else
-    [_webView reload];
-#endif
 }
 - (void)stopClicked:(UIBarButtonItem *)sender {
     [self willStop];
-#if AX_WEB_VIEW_CONTROLLER_USING_WEBKIT
     [_webView stopLoading];
-#else
-    [_webView stopLoading];
-#endif
 }
 
 - (void)actionButtonClicked:(UIBarButtonItem *)sender {
     NSArray *activities = @[[AXWebViewControllerActivitySafari new], [AXWebViewControllerActivityChrome new]];
     NSURL *URL;
-#if AX_WEB_VIEW_CONTROLLER_USING_WEBKIT
     URL = _webView.URL;
-#else
-    URL = _webView.request.URL;
-#endif
     
     UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[URL] applicationActivities:activities];
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
@@ -1161,17 +976,10 @@ BOOL AX_WEB_VIEW_CONTROLLER_iOS10_0_AVAILABLE() { return AX_WEB_VIEW_CONTROLLER_
 }
 
 - (void)navigationItemHandleBack:(UIBarButtonItem *)sender {
-#if AX_WEB_VIEW_CONTROLLER_USING_WEBKIT
     if ([_webView canGoBack]) {
         _navigation = [_webView goBack];
         return;
     }
-#else
-    if ([self.webView canGoBack]) {
-        [self.webView goBack];
-        return;
-    }
-#endif
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -1183,24 +991,7 @@ BOOL AX_WEB_VIEW_CONTROLLER_iOS10_0_AVAILABLE() { return AX_WEB_VIEW_CONTROLLER_
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
-#if !AX_WEB_VIEW_CONTROLLER_USING_WEBKIT
--(void)swipePanGestureHandler:(UIPanGestureRecognizer*)panGesture{
-    CGPoint translation = [panGesture translationInView:self.webView];
-    CGPoint location = [panGesture locationInView:self.webView];
-    
-    if (panGesture.state == UIGestureRecognizerStateBegan) {
-        if (location.x <= 50 && translation.x >= 0) {  //开始动画
-            [self startPopSnapshotView];
-        }
-    }else if (panGesture.state == UIGestureRecognizerStateCancelled || panGesture.state == UIGestureRecognizerStateEnded){
-        [self endPopSnapShotView];
-    }else if (panGesture.state == UIGestureRecognizerStateChanged){
-        [self popSnapShotViewWithPanGestureDistance:translation.x];
-    }
-}
-#endif
 
-#if AX_WEB_VIEW_CONTROLLER_USING_WEBKIT
 #pragma mark - WKUIDelegate
 - (nullable WKWebView *)webView:(WKWebView *)webView createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration forNavigationAction:(WKNavigationAction *)navigationAction windowFeatures:(WKWindowFeatures *)windowFeatures {
     WKFrameInfo *frameInfo = navigationAction.targetFrame;
@@ -1211,10 +1002,8 @@ BOOL AX_WEB_VIEW_CONTROLLER_iOS10_0_AVAILABLE() { return AX_WEB_VIEW_CONTROLLER_
     }
     return nil;
 }
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_9_0
 - (void)webViewDidClose:(WKWebView *)webView {
 }
-#endif
 - (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler {
     // Get host name of url.
     NSString *host = webView.URL.host;
@@ -1442,7 +1231,6 @@ BOOL AX_WEB_VIEW_CONTROLLER_iOS10_0_AVAILABLE() { return AX_WEB_VIEW_CONTROLLER_
     }
     // completionHandler(NSURLSessionAuthChallengePerformDefaultHandling, nil);
 }
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_9_0
 - (void)webViewWebContentProcessDidTerminate:(WKWebView *)webView {
     // Get the host name.
     NSString *host = webView.URL.host;
@@ -1458,139 +1246,6 @@ BOOL AX_WEB_VIEW_CONTROLLER_iOS10_0_AVAILABLE() { return AX_WEB_VIEW_CONTROLLER_
     [alert addAction:cancelAction];
     [alert addAction:okAction];
 }
-#endif
-#else
-#pragma mark - UIWebViewDelegate
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
-    // URL actions
-    if ([request.URL.absoluteString isEqualToString:kAX404NotFoundURLKey] || [request.URL.absoluteString isEqualToString:kAXNetworkErrorURLKey]) {
-        [self loadURL:_URL]; return NO;
-    }
-    // Resolve URL. Fixs the issue: https://github.com/devedbox/AXWebViewController/issues/7
-    NSURLComponents *components = [[NSURLComponents alloc] initWithString:request.URL.absoluteString];
-    // For appstore.
-    if ([[NSPredicate predicateWithFormat:@"SELF BEGINSWITH[cd] 'https://itunes.apple.com/' OR SELF BEGINSWITH[cd] 'mailto:' OR SELF BEGINSWITH[cd] 'tel:' OR SELF BEGINSWITH[cd] 'telprompt:'"] evaluateWithObject:request.URL.absoluteString]) {
-        if ([[NSPredicate predicateWithFormat:@"SELF BEGINSWITH[cd] 'https://itunes.apple.com/'"] evaluateWithObject:components.URL.absoluteString] && !_reviewsAppInAppStore) {
-//            [[AXPracticalHUD sharedHUD] showSimpleInView:self.view.window text:nil detail:nil configuration:^(AXPracticalHUD *HUD) {
-//                HUD.lockBackground = YES;
-//                HUD.removeFromSuperViewOnHide = YES;
-//            }];
-            SKStoreProductViewController *productVC = [[SKStoreProductViewController alloc] init];
-            productVC.delegate = self;
-            NSError *error;
-            NSRegularExpression *regex = [[NSRegularExpression alloc] initWithPattern:@"id[1-9]\\d*" options:NSRegularExpressionCaseInsensitive error:&error];
-            NSTextCheckingResult *result = [regex firstMatchInString:components.URL.absoluteString options:NSMatchingReportCompletion range:NSMakeRange(0, components.URL.absoluteString.length)];
-            
-            if (!error && result) {
-                NSRange range = NSMakeRange(result.range.location+2, result.range.length-2);
-                [productVC loadProductWithParameters:@{SKStoreProductParameterITunesItemIdentifier: @([[components.URL.absoluteString substringWithRange:range] integerValue])} completionBlock:^(BOOL result, NSError * _Nullable error) {
-                    if (!result || error) {
-//                        [[AXPracticalHUD sharedHUD] showErrorInView:self.view.window text:error.localizedDescription detail:nil configuration:^(AXPracticalHUD *HUD) {
-//                            HUD.lockBackground = YES;
-//                            HUD.removeFromSuperViewOnHide = YES;
-//                        }];
-//                        [[AXPracticalHUD sharedHUD] hide:YES afterDelay:1.5 completion:NULL];
-//                    } else {
-//                        [[AXPracticalHUD sharedHUD] hide:YES afterDelay:0.5 completion:NULL];
-                    }
-                }];
-                [self presentViewController:productVC animated:YES completion:NULL];
-                decisionHandler(WKNavigationActionPolicyCancel);
-                return;
-            } else {
-                [[AXPracticalHUD sharedHUD] hide:YES afterDelay:0.5 completion:NULL];
-            }
-        }
-        if ([[UIApplication sharedApplication] canOpenURL:request.URL]) {
-            if (AX_WEB_VIEW_CONTROLLER_AVAILABLE_ON(_kiOS10_0)/*UIDevice.currentDevice.systemVersion.floatValue >= 10.0*/) {
-                [UIApplication.sharedApplication openURL:request.URL options:@{} completionHandler:NULL];
-            } else {
-                [[UIApplication sharedApplication] openURL:request.URL];
-            }
-        }
-        return NO;
-    } else if (![[NSPredicate predicateWithFormat:@"SELF MATCHES[cd] 'https' OR SELF MATCHES[cd] 'http' OR SELF MATCHES[cd] 'file' OR SELF MATCHES[cd] 'about'"] evaluateWithObject:components.scheme]) {// For any other schema.
-        
-        
-        if (@available(iOS 8.0, *)) { // openURL if ios version is low then 8 , app will crash
-            if (!self.checkUrlCanOpen || [[UIApplication sharedApplication] canOpenURL:components.URL]) {
-                if (@available(iOS 10.0, *)) {
-                    [UIApplication.sharedApplication openURL:components.URL options:@{} completionHandler:NULL];
-                }else{
-                    [[UIApplication sharedApplication] openURL:components.URL];
-                }
-            }
-        }else{
-            if ([[UIApplication sharedApplication] canOpenURL:components.URL]) {
-                [[UIApplication sharedApplication] openURL:components.URL];
-            }
-        }
-
-        return NO;
-    }
-    
-    switch (navigationType) {
-        case UIWebViewNavigationTypeLinkClicked: {
-            [self pushCurrentSnapshotViewWithRequest:request];
-            break;
-        }
-        case UIWebViewNavigationTypeFormSubmitted: {
-            [self pushCurrentSnapshotViewWithRequest:request];
-            break;
-        }
-        case UIWebViewNavigationTypeBackForward: {
-            break;
-        }
-        case UIWebViewNavigationTypeReload: {
-            break;
-        }
-        case UIWebViewNavigationTypeFormResubmitted: {
-            break;
-        }
-        case UIWebViewNavigationTypeOther: {
-            [self pushCurrentSnapshotViewWithRequest:request];
-            break;
-        }
-        default: {
-            break;
-        }
-    }
-    if (_navigationType == AXWebViewControllerNavigationBarItem) {
-        [self updateNavigationItems];
-    }
-    if (_navigationType == AXWebViewControllerNavigationToolItem) {
-        [self updateToolbarItems];
-    }
-    return YES;
-}
-
-- (void)webViewDidStartLoad:(UIWebView *)webView {
-    [self _didStartLoadWithObj:nil];
-}
-
-- (void)webViewDidFinishLoad:(UIWebView *)webView {
-    [self didFinishLoad];
-}
-
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-    if (error.code == NSURLErrorCancelled) {
-        [webView reload]; return;
-    }
-    [self didFailLoadWithError:error];
-}
-#endif
-
-#pragma mark - NJKWebViewProgressDelegate
-
--(void)webViewProgress:(NJKWebViewProgress *)webViewProgress updateProgress:(float)progress
-{
-    // Add progress view to navigation bar.
-    if (self.navigationController && self.progressView.superview != self.navigationController.navigationBar) {
-        [self updateFrameOfProgressView];
-        [self.navigationController.navigationBar addSubview:self.progressView];
-    }
-    [_progressView setProgress:progress animated:YES];
-}
 
 #pragma mark - SKStoreProductViewControllerDelegate.
 - (void)productViewControllerDidFinish:(SKStoreProductViewController *)viewController {
@@ -1600,11 +1255,7 @@ BOOL AX_WEB_VIEW_CONTROLLER_iOS10_0_AVAILABLE() { return AX_WEB_VIEW_CONTROLLER_
 #pragma mark - Helper
 - (void)_updateTitleOfWebVC {
     NSString *title = self.title;
-#if AX_WEB_VIEW_CONTROLLER_USING_WEBKIT
     title = title.length>0 ? title: [_webView title];
-#else
-    title = title.length>0 ? title: [_webView stringByEvaluatingJavaScriptFromString:@"document.title"];
-#endif
     if (title.length > _maxAllowedTitleLength) {
         title = [[title substringToIndex:_maxAllowedTitleLength-1] stringByAppendingString:@"…"];
     }
@@ -1618,154 +1269,12 @@ BOOL AX_WEB_VIEW_CONTROLLER_iOS10_0_AVAILABLE() { return AX_WEB_VIEW_CONTROLLER_
     _progressView.frame = barFrame;
 }
 
-#if !AX_WEB_VIEW_CONTROLLER_USING_WEBKIT
--(void)pushCurrentSnapshotViewWithRequest:(NSURLRequest*)request{
-    NSURLRequest* lastRequest = (NSURLRequest*)[[self.snapshots lastObject] objectForKey:@"request"];
-    
-    // 如果url是很奇怪的就不push
-    if ([request.URL.absoluteString isEqualToString:@"about:blank"]) {
-        return;
-    }
-    //如果url一样就不进行push
-    if ([lastRequest.URL.absoluteString isEqualToString:request.URL.absoluteString]) {
-        return;
-    }
-    
-    UIView* currentSnapshotView = [self.webView snapshotViewAfterScreenUpdates:YES];
-    [self.snapshots addObject:
-     @{@"request":request,
-       @"snapShotView":currentSnapshotView}
-     ];
-}
-
--(void)startPopSnapshotView{
-    if (self.isSwipingBack) {
-        return;
-    }
-    if (!self.webView.canGoBack) {
-        return;
-    }
-    self.isSwipingBack = YES;
-    //create a center of scrren
-    CGPoint center = CGPointMake(self.view.bounds.size.width/2, self.view.bounds.size.height/2);
-    
-    self.currentSnapshotView = [self.webView snapshotViewAfterScreenUpdates:YES];
-    
-    //add shadows just like UINavigationController
-    self.currentSnapshotView.layer.shadowColor = [UIColor blackColor].CGColor;
-    self.currentSnapshotView.layer.shadowOffset = CGSizeMake(3, 3);
-    self.currentSnapshotView.layer.shadowRadius = 5;
-    self.currentSnapshotView.layer.shadowOpacity = 0.75;
-    
-    //move to center of screen
-    self.currentSnapshotView.center = center;
-    
-    self.previousSnapshotView = (UIView*)[[self.snapshots lastObject] objectForKey:@"snapShotView"];
-    center.x -= 60;
-    self.previousSnapshotView.center = center;
-    self.previousSnapshotView.alpha = 1;
-    self.view.backgroundColor = [UIColor colorWithRed:0.180 green:0.192 blue:0.196 alpha:1.00];
-    
-    [self.view addSubview:self.previousSnapshotView];
-    [self.view addSubview:self.swipingBackgoundView];
-    [self.view addSubview:self.currentSnapshotView];
-}
-
--(void)popSnapShotViewWithPanGestureDistance:(CGFloat)distance{
-    if (!self.isSwipingBack) {
-        return;
-    }
-    
-    if (distance <= 0) {
-        return;
-    }
-    
-    CGFloat boundsWidth = CGRectGetWidth(self.view.bounds);
-    CGFloat boundsHeight = CGRectGetHeight(self.view.bounds);
-    
-    CGPoint currentSnapshotViewCenter = CGPointMake(boundsWidth/2, boundsHeight/2);
-    currentSnapshotViewCenter.x += distance;
-    CGPoint previousSnapshotViewCenter = CGPointMake(boundsWidth/2, boundsHeight/2);
-    previousSnapshotViewCenter.x -= (boundsWidth - distance)*60/boundsWidth;
-    
-    self.currentSnapshotView.center = currentSnapshotViewCenter;
-    self.previousSnapshotView.center = previousSnapshotViewCenter;
-    self.swipingBackgoundView.alpha = (boundsWidth - distance)/boundsWidth;
-}
-
--(void)endPopSnapShotView{
-    if (!self.isSwipingBack) {
-        return;
-    }
-    
-    //prevent the user touch for now
-    self.view.userInteractionEnabled = NO;
-    
-    CGFloat boundsWidth = CGRectGetWidth(self.view.bounds);
-    CGFloat boundsHeight = CGRectGetHeight(self.view.bounds);
-    
-    if (self.currentSnapshotView.center.x >= boundsWidth) {
-        // pop success
-        [UIView animateWithDuration:0.2 animations:^{
-            [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-            
-            self.currentSnapshotView.center = CGPointMake(boundsWidth*3/2, boundsHeight/2);
-            self.previousSnapshotView.center = CGPointMake(boundsWidth/2, boundsHeight/2);
-            self.swipingBackgoundView.alpha = 0;
-        }completion:^(BOOL finished) {
-            [self.previousSnapshotView removeFromSuperview];
-            [self.swipingBackgoundView removeFromSuperview];
-            [self.currentSnapshotView removeFromSuperview];
-            [self goBackClicked];
-            [self.snapshots removeLastObject];
-            self.view.userInteractionEnabled = YES;
-            
-            self.isSwipingBack = NO;
-        }];
-    }else{
-        //pop fail
-        [UIView animateWithDuration:0.2 animations:^{
-            [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-            
-            self.currentSnapshotView.center = CGPointMake(boundsWidth/2, boundsHeight/2);
-            self.previousSnapshotView.center = CGPointMake(boundsWidth/2-60, boundsHeight/2);
-            self.previousSnapshotView.alpha = 1;
-        }completion:^(BOOL finished) {
-            [self.previousSnapshotView removeFromSuperview];
-            [self.swipingBackgoundView removeFromSuperview];
-            [self.currentSnapshotView removeFromSuperview];
-            self.view.userInteractionEnabled = YES;
-            
-            self.isSwipingBack = NO;
-        }];
-    }
-}
-
-- (void)updatingProgress:(NSTimer *)sender {
-    if (!_loading) {
-        if (_progressView.progress >= 1.0) {
-            [_updating invalidate];
-        }
-        else {
-            [_progressView setProgress:_progressView.progress + 0.05 animated:YES];
-        }
-    }
-    else {
-        [_progressView setProgress:_progressView.progress + 0.05 animated:YES];
-        if (_progressView.progress >= 0.9) {
-            _progressView.progress = 0.9;
-        }
-    }
-}
-#endif
-
 - (void)setupSubviews {
     // Add from label and constraints.
     id topLayoutGuide = self.topLayoutGuide;
     id bottomLayoutGuide = self.bottomLayoutGuide;
     
     // Add web view.
-#if AX_WEB_VIEW_CONTROLLER_USING_WEBKIT
     // Set the content inset of scroll view to the max y position of navigation bar to adjust scroll view content inset.
     // To fix issue: https://github.com/devedbox/AXWebViewController/issues/10
     /*
@@ -1787,14 +1296,6 @@ BOOL AX_WEB_VIEW_CONTROLLER_iOS10_0_AVAILABLE() { return AX_WEB_VIEW_CONTROLLER_
     [self.containerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_backgroundLabel]-20-[_webView]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_backgroundLabel, _webView)]];
     
     [self.containerView bringSubviewToFront:_backgroundLabel];
-#else
-    [self.view insertSubview:self.backgroundLabel atIndex:0];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-8-[_backgroundLabel]-8-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_backgroundLabel)]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[topLayoutGuide]-10-[_backgroundLabel]-(>=0)-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_backgroundLabel, topLayoutGuide)]];
-    [self.view addSubview:self.webView];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_webView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_webView)]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[topLayoutGuide][_webView][bottomLayoutGuide]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_webView, topLayoutGuide, bottomLayoutGuide)]];
-#endif
     
     self.progressView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 2);
     [self.view addSubview:self.progressView];
@@ -1853,81 +1354,81 @@ BOOL AX_WEB_VIEW_CONTROLLER_iOS10_0_AVAILABLE() { return AX_WEB_VIEW_CONTROLLER_
     }
 }
 
-- (void)hookWebContentCommitPreviewHandler {
-    // Find the `WKContentView` in the webview.
-    __weak typeof(self) wself = self;
-    for (UIView *_view in _webView.scrollView.subviews) {
-        if ([_view isKindOfClass:NSClassFromString(@"WKContentView")]) {
-            id _previewItemController = object_getIvar(_view, class_getInstanceVariable([_view class], "_previewItemController"));
-            Class _class = [_previewItemController class];
-            SEL _performCustomCommitSelector = NSSelectorFromString(@"previewInteractionController:interactionProgress:forRevealAtLocation:inSourceView:containerView:");
-            [_previewItemController aspect_hookSelector:_performCustomCommitSelector withOptions:AspectPositionAfter usingBlock:^() {
-                UIViewController *pred = [_previewItemController valueForKeyPath:@"presentedViewController"];
-                [pred aspect_hookSelector:NSSelectorFromString(@"_addRemoteView") withOptions:AspectPositionAfter usingBlock:^() {
-                    UIViewController *_remoteViewController = object_getIvar(pred, class_getInstanceVariable([pred class], "_remoteViewController"));
-                    
-                    [_remoteViewController aspect_hookSelector:@selector(viewDidLoad) withOptions:AspectPositionAfter usingBlock:^() {
-                        _remoteViewController.view.tintColor = wself.navigationController.navigationBar.tintColor;
-                    } error:NULL];
-                } error:NULL];
-                
-                NSArray *ddActions = [pred valueForKeyPath:@"ddActions"];
-                id openURLAction = [ddActions firstObject];
-                
-                [openURLAction aspect_hookSelector:NSSelectorFromString(@"perform") withOptions:AspectPositionInstead usingBlock:^ () {
-                    NSURL *_url = object_getIvar(openURLAction, class_getInstanceVariable([openURLAction class], "_url"));
-                    [wself loadURL:_url];
-                } error:NULL];
-                
-                id _lookupItem = object_getIvar(_previewItemController, class_getInstanceVariable([_class class], "_lookupItem"));
-                [_lookupItem aspect_hookSelector:NSSelectorFromString(@"commit") withOptions:AspectPositionInstead usingBlock:^() {
-                    NSURL *_url = object_getIvar(_lookupItem, class_getInstanceVariable([_lookupItem class], "_url"));
-                    [wself loadURL:_url];
-                } error:NULL];
-                [_lookupItem aspect_hookSelector:NSSelectorFromString(@"commitWithTransitionForPreviewViewController:inViewController:completion:") withOptions:AspectPositionInstead usingBlock:^() {
-                    NSURL *_url = object_getIvar(_lookupItem, class_getInstanceVariable([_lookupItem class], "_url"));
-                    [wself loadURL:_url];
-                } error:NULL];
-                /*
-                 UIWindow
-                 -UITransitionView
-                 --UIVisualEffectView
-                 ---_UIVisualEffectContentView
-                 ----UIView
-                 -----_UIPreviewActionSheetView
-                 */
-                /*
-                 for (UIView * transitionView in [UIApplication sharedApplication].keyWindow.subviews) {
-                 if ([transitionView isMemberOfClass:NSClassFromString(@"UITransitionView")]) {
-                 transitionView.tintColor = wself.navigationController.navigationBar.tintColor;
-                 for (UIView *__view in transitionView.subviews) {
-                 if ([__view isMemberOfClass:NSClassFromString(@"UIVisualEffectView")]) {
-                 for (UIView *___view in __view.subviews) {
-                 if ([___view isMemberOfClass:NSClassFromString(@"_UIVisualEffectContentView")]) {
-                 for (UIView *____view in ___view.subviews) {
-                 if ([____view isMemberOfClass:NSClassFromString(@"UIView")]) {
-                 __weak typeof(____view) w____view = ____view;
-                 [____view aspect_hookSelector:@selector(addSubview:) withOptions:AspectPositionAfter usingBlock:^() {
-                 for (UIView *actionSheet in w____view.subviews) {
-                 if ([actionSheet isMemberOfClass:NSClassFromString(@"_UIPreviewActionSheetView")]) {
-                 break;
-                 }
-                 }
-                 } error:NULL];
-                 }
-                 }break;
-                 }
-                 }break;
-                 }
-                 }break;
-                 }
-                 }
-                 */
-            } error:NULL];
-            break;
-        }
-    }
-}
+//- (void)hookWebContentCommitPreviewHandler {
+//    // Find the `WKContentView` in the webview.
+//    __weak typeof(self) wself = self;
+//    for (UIView *_view in _webView.scrollView.subviews) {
+//        if ([_view isKindOfClass:NSClassFromString(@"WKContentView")]) {
+//            id _previewItemController = object_getIvar(_view, class_getInstanceVariable([_view class], "_previewItemController"));
+//            Class _class = [_previewItemController class];
+//            SEL _performCustomCommitSelector = NSSelectorFromString(@"previewInteractionController:interactionProgress:forRevealAtLocation:inSourceView:containerView:");
+//            [_previewItemController aspect_hookSelector:_performCustomCommitSelector withOptions:AspectPositionAfter usingBlock:^() {
+//                UIViewController *pred = [_previewItemController valueForKeyPath:@"presentedViewController"];
+//                [pred aspect_hookSelector:NSSelectorFromString(@"_addRemoteView") withOptions:AspectPositionAfter usingBlock:^() {
+//                    UIViewController *_remoteViewController = object_getIvar(pred, class_getInstanceVariable([pred class], "_remoteViewController"));
+//
+//                    [_remoteViewController aspect_hookSelector:@selector(viewDidLoad) withOptions:AspectPositionAfter usingBlock:^() {
+//                        _remoteViewController.view.tintColor = wself.navigationController.navigationBar.tintColor;
+//                    } error:NULL];
+//                } error:NULL];
+//
+//                NSArray *ddActions = [pred valueForKeyPath:@"ddActions"];
+//                id openURLAction = [ddActions firstObject];
+//
+//                [openURLAction aspect_hookSelector:NSSelectorFromString(@"perform") withOptions:AspectPositionInstead usingBlock:^ () {
+//                    NSURL *_url = object_getIvar(openURLAction, class_getInstanceVariable([openURLAction class], "_url"));
+//                    [wself loadURL:_url];
+//                } error:NULL];
+//
+//                id _lookupItem = object_getIvar(_previewItemController, class_getInstanceVariable([_class class], "_lookupItem"));
+//                [_lookupItem aspect_hookSelector:NSSelectorFromString(@"commit") withOptions:AspectPositionInstead usingBlock:^() {
+//                    NSURL *_url = object_getIvar(_lookupItem, class_getInstanceVariable([_lookupItem class], "_url"));
+//                    [wself loadURL:_url];
+//                } error:NULL];
+//                [_lookupItem aspect_hookSelector:NSSelectorFromString(@"commitWithTransitionForPreviewViewController:inViewController:completion:") withOptions:AspectPositionInstead usingBlock:^() {
+//                    NSURL *_url = object_getIvar(_lookupItem, class_getInstanceVariable([_lookupItem class], "_url"));
+//                    [wself loadURL:_url];
+//                } error:NULL];
+//                /*
+//                 UIWindow
+//                 -UITransitionView
+//                 --UIVisualEffectView
+//                 ---_UIVisualEffectContentView
+//                 ----UIView
+//                 -----_UIPreviewActionSheetView
+//                 */
+//                /*
+//                 for (UIView * transitionView in [UIApplication sharedApplication].keyWindow.subviews) {
+//                 if ([transitionView isMemberOfClass:NSClassFromString(@"UITransitionView")]) {
+//                 transitionView.tintColor = wself.navigationController.navigationBar.tintColor;
+//                 for (UIView *__view in transitionView.subviews) {
+//                 if ([__view isMemberOfClass:NSClassFromString(@"UIVisualEffectView")]) {
+//                 for (UIView *___view in __view.subviews) {
+//                 if ([___view isMemberOfClass:NSClassFromString(@"_UIVisualEffectContentView")]) {
+//                 for (UIView *____view in ___view.subviews) {
+//                 if ([____view isMemberOfClass:NSClassFromString(@"UIView")]) {
+//                 __weak typeof(____view) w____view = ____view;
+//                 [____view aspect_hookSelector:@selector(addSubview:) withOptions:AspectPositionAfter usingBlock:^() {
+//                 for (UIView *actionSheet in w____view.subviews) {
+//                 if ([actionSheet isMemberOfClass:NSClassFromString(@"_UIPreviewActionSheetView")]) {
+//                 break;
+//                 }
+//                 }
+//                 } error:NULL];
+//                 }
+//                 }break;
+//                 }
+//                 }break;
+//                 }
+//                 }break;
+//                 }
+//                 }
+//                 */
+//            } error:NULL];
+//            break;
+//        }
+//    }
+//}
 
 - (void)orientationChanged:(NSNotification *)note  {
     // Update tool bar items of navigation tpye is tool item.
@@ -1937,7 +1438,6 @@ BOOL AX_WEB_VIEW_CONTROLLER_iOS10_0_AVAILABLE() { return AX_WEB_VIEW_CONTROLLER_
 }
 @end
 
-#if AX_WEB_VIEW_CONTROLLER_USING_WEBKIT
 @implementation AXWebViewController (Security)
 - (WKWebViewDidReceiveAuthenticationChallengeHandler)challengeHandler {
     return _challengeHandler;
@@ -1955,9 +1455,7 @@ BOOL AX_WEB_VIEW_CONTROLLER_iOS10_0_AVAILABLE() { return AX_WEB_VIEW_CONTROLLER_
     _securityPolicy = securityPolicy;
 }
 @end
-#endif
 
-#if AX_WEB_VIEW_CONTROLLER_USING_WEBKIT
 @implementation UIProgressView (WebKit)
 + (void)load {
     static dispatch_once_t onceToken;
@@ -2031,19 +1529,3 @@ BOOL AX_WEB_VIEW_CONTROLLER_iOS10_0_AVAILABLE() { return AX_WEB_VIEW_CONTROLLER_
     objc_setAssociatedObject(self, @selector(ax_webViewController), ax_webViewController, OBJC_ASSOCIATION_ASSIGN);
 }
 @end
-#endif
-#if !AX_WEB_VIEW_CONTROLLER_USING_WEBKIT
-@implementation _AXWebViewProgressView
-- (void)setProgress:(float)progress animated:(BOOL)animated {
-    [super setProgress:progress animated:animated];
-    
-    if (progress >= 1.0) {
-        if (_webViewController.navigationType == AXWebViewControllerNavigationBarItem) {
-            [_webViewController updateNavigationItems];
-        } else {
-            [_webViewController updateToolbarItems];
-        }
-    }
-}
-@end
-#endif

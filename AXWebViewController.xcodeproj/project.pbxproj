@@ -31,11 +31,7 @@
 		0A908A301F7CE35800513380 /* AXWebViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 01513C051C28F90000CB8238 /* AXWebViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0A908A311F7CE35800513380 /* AXWebViewControllerActivity.h in Headers */ = {isa = PBXBuildFile; fileRef = DCABA01D1EC5FDFF005C7D31 /* AXWebViewControllerActivity.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0A908A321F7CE35800513380 /* AXSecurityPolicy.h in Headers */ = {isa = PBXBuildFile; fileRef = DCABA0191EC5EE2A005C7D31 /* AXSecurityPolicy.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		0A908A331F7E1CAC00513380 /* libAspects.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A908A381F7E1CAC00513380 /* libAspects.a */; };
-		0A908A341F7E1CAC00513380 /* libAXIndicatorView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A908A391F7E1CAC00513380 /* libAXIndicatorView.a */; };
-		0A908A351F7E1CAC00513380 /* libAXNavigationBackItemInjection.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A908A3A1F7E1CAC00513380 /* libAXNavigationBackItemInjection.a */; };
-		0A908A361F7E1CAC00513380 /* libAXPracticalHUD.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A908A3B1F7E1CAC00513380 /* libAXPracticalHUD.a */; };
-		0A908A371F7E1CAC00513380 /* libNJKWebViewProgress.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A908A3C1F7E1CAC00513380 /* libNJKWebViewProgress.a */; };
+		0ADCFE6024C6E33000636ABA /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0ADCFE5F24C6E33000636ABA /* Info.plist */; };
 		97F6BE6D557C0BB485DDCF88 /* libPods-AXWebViewController.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2642E682614F41BF460E7673 /* libPods-AXWebViewController.a */; };
 		DCA3C59F1FB0302F008DB632 /* FullScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA3C59E1FB0302F008DB632 /* FullScreenViewController.m */; };
 		DCABA01B1EC5EE2A005C7D31 /* AXSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = DCABA01A1EC5EE2A005C7D31 /* AXSecurityPolicy.m */; };
@@ -95,6 +91,7 @@
 		0A908A3A1F7E1CAC00513380 /* libAXNavigationBackItemInjection.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libAXNavigationBackItemInjection.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A908A3B1F7E1CAC00513380 /* libAXPracticalHUD.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libAXPracticalHUD.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A908A3C1F7E1CAC00513380 /* libNJKWebViewProgress.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libNJKWebViewProgress.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		0ADCFE5F24C6E33000636ABA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = AXWebViewController/Info.plist; sourceTree = "<group>"; };
 		2642E682614F41BF460E7673 /* libPods-AXWebViewController.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AXWebViewController.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B7311EC599653BFAAF42107 /* Pods-AXWebViewController.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AXWebViewController.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AXWebViewController/Pods-AXWebViewController.debug.xcconfig"; sourceTree = "<group>"; };
 		A13CC1551E977227003AC1B2 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Main.strings"; sourceTree = "<group>"; };
@@ -123,11 +120,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0A908A331F7E1CAC00513380 /* libAspects.a in Frameworks */,
-				0A908A341F7E1CAC00513380 /* libAXIndicatorView.a in Frameworks */,
-				0A908A351F7E1CAC00513380 /* libAXNavigationBackItemInjection.a in Frameworks */,
-				0A908A361F7E1CAC00513380 /* libAXPracticalHUD.a in Frameworks */,
-				0A908A371F7E1CAC00513380 /* libNJKWebViewProgress.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -181,6 +173,7 @@
 		01513C081C28F90300CB8238 /* AXWebViewController */ = {
 			isa = PBXGroup;
 			children = (
+				0ADCFE5F24C6E33000636ABA /* Info.plist */,
 				01513C051C28F90000CB8238 /* AXWebViewController.h */,
 				01513C061C28F90000CB8238 /* AXWebViewController.m */,
 				01CDC1501C2A3C9100D9AF53 /* AXWebViewController.bundle */,
@@ -280,8 +273,6 @@
 				01513BE71C28F70700CB8238 /* Sources */,
 				01513BE81C28F70700CB8238 /* Frameworks */,
 				01513BE91C28F70700CB8238 /* Resources */,
-				F3182DEE5A600ABFAF07F7DC /* [CP] Embed Pods Frameworks */,
-				90CC7504393E7254ABAF393F /* [CP] Copy Pods Resources */,
 				0A908A261F7CE2DB00513380 /* Embed Frameworks */,
 			);
 			buildRules = (
@@ -319,7 +310,7 @@
 		01513BE31C28F70700CB8238 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = AiXing;
 				TargetAttributes = {
 					01513BEA1C28F70700CB8238 = {
@@ -336,12 +327,13 @@
 			};
 			buildConfigurationList = 01513BE61C28F70700CB8238 /* Build configuration list for PBXProject "AXWebViewController" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
 				"zh-Hans",
+				"zh-Hant",
 			);
 			mainGroup = 01513BE21C28F70700CB8238;
 			productRefGroup = 01513BEC1C28F70700CB8238 /* Products */;
@@ -361,6 +353,7 @@
 			files = (
 				01CDC1511C2A3C9100D9AF53 /* AXWebViewController.bundle in Resources */,
 				01513BFE1C28F70700CB8238 /* LaunchScreen.storyboard in Resources */,
+				0ADCFE6024C6E33000636ABA /* Info.plist in Resources */,
 				01513BFB1C28F70700CB8238 /* Assets.xcassets in Resources */,
 				DCCF48241E7987C9009CF38E /* Swift.pdf in Resources */,
 				01513BF91C28F70700CB8238 /* Main.storyboard in Resources */,
@@ -390,7 +383,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "pod update";
+			shellScript = "pod install\n#update\n";
 		};
 		43867203D586B50CBAAFDB18 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -408,40 +401,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		90CC7504393E7254ABAF393F /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-AXWebViewController/Pods-AXWebViewController-resources.sh",
-				"${PODS_ROOT}/AXIndicatorView/AXIndicatorView/Classes/AXIndicatorView.bundle",
-				"${PODS_ROOT}/AXPracticalHUD/AXPracticalHUD/AXPracticalHUD/AXPracticalHUD.bundle",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AXWebViewController/Pods-AXWebViewController-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F3182DEE5A600ABFAF07F7DC /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AXWebViewController/Pods-AXWebViewController-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -523,12 +482,14 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -555,7 +516,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -575,12 +536,14 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -601,7 +564,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -617,7 +580,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = TKA48YVS5T;
 				INFOPLIST_FILE = AXWebViewController/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = KEEPStudio.AXWebViewController;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -635,7 +598,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = TKA48YVS5T;
 				INFOPLIST_FILE = AXWebViewController/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = KEEPStudio.AXWebViewController;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -658,7 +621,7 @@
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -668,23 +631,19 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				HEADER_SEARCH_PATHS = (
-					"\"$(SRCROOT)/Pods/AXIndicatorView\"",
 					"\"$(SRCROOT)/Pods/AXNavigationBackItemInjection\"",
-					"\"$(SRCROOT)/Pods/AXPracticalHUD\"",
 					"\"$(SRCROOT)/Pods/Aspects\"",
 					"\"$(SRCROOT)/Pods/NJKWebViewProgress\"",
 					"\"$(SRCROOT)/Pods\"",
 					"\"$(SRCROOT)/Pods/AXPracticalHUD/AXPracticalHUD\"",
 				);
-				INFOPLIST_FILE = "AXWebViewController-framework/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/AXWebViewController/AXWebViewController/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/AXIndicatorView\"",
 					"\"$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/AXNavigationBackItemInjection\"",
-					"\"$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/AXPracticalHUD\"",
 					"\"$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/Aspects\"",
 					"\"$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/NJKWebViewProgress\"",
 				);
@@ -711,7 +670,7 @@
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -721,23 +680,19 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				HEADER_SEARCH_PATHS = (
-					"\"$(SRCROOT)/Pods/AXIndicatorView\"",
 					"\"$(SRCROOT)/Pods/AXNavigationBackItemInjection\"",
-					"\"$(SRCROOT)/Pods/AXPracticalHUD\"",
 					"\"$(SRCROOT)/Pods/Aspects\"",
 					"\"$(SRCROOT)/Pods/NJKWebViewProgress\"",
 					"\"$(SRCROOT)/Pods\"",
 					"\"$(SRCROOT)/Pods/AXPracticalHUD/AXPracticalHUD\"",
 				);
-				INFOPLIST_FILE = "AXWebViewController-framework/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/AXWebViewController/AXWebViewController/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/AXIndicatorView\"",
 					"\"$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/AXNavigationBackItemInjection\"",
-					"\"$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/AXPracticalHUD\"",
 					"\"$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/Aspects\"",
 					"\"$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/NJKWebViewProgress\"",
 				);
