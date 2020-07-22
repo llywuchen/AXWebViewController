@@ -301,16 +301,7 @@ static inline BOOL AX_WEB_VIEW_CONTROLLER_NOT_USING_WEB_KIT() {
     
     [self setupSubviews];
     
-    if (_request) {
-        [self loadURLRequest:_request];
-    } else if (_URL) {
-        [self loadURL:_URL];
-    } else if (/*_baseURL && */_HTMLString) {
-        [self loadHTMLString:_HTMLString baseURL:_baseURL];
-    } else {
-        // Handle none resource case.
-        [self loadURL:[NSURL fileURLWithPath:kAX404NotFoundHTMLPath]];
-    }
+    [self loadWebView];
     
     // Config navigation item
     self.navigationItem.leftItemsSupplementBackButton = YES;
@@ -784,6 +775,19 @@ static inline BOOL AX_WEB_VIEW_CONTROLLER_NOT_USING_WEB_KIT() {
 }
 
 #pragma mark - Public
+- (void)loadWebView{
+    if (_request) {
+        [self loadURLRequest:_request];
+    } else if (_URL) {
+        [self loadURL:_URL];
+    } else if (/*_baseURL && */_HTMLString) {
+        [self loadHTMLString:_HTMLString baseURL:_baseURL];
+    } else {
+        // Handle none resource case.
+        [self loadURL:[NSURL fileURLWithPath:kAX404NotFoundHTMLPath]];
+    }
+}
+
 - (void)loadURL:(NSURL *)pageURL {
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:pageURL];
     request.timeoutInterval = _timeoutInternal;

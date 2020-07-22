@@ -189,6 +189,8 @@ API_AVAILABLE(ios(8.0))
 ///
 /// @param URL a new url.
 - (void)loadURL:(NSURL*)URL;
+
+- (void)loadWebView AX_REQUIRES_SUPER;
 /// Load a new html string.
 ///
 /// @param HTMLString a encoded html string.
