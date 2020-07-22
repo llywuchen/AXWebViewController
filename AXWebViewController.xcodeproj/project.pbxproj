@@ -18,8 +18,8 @@
 		01AA4F1C1D4F28DD008F2A2C /* TabbarViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = 01AA4F1B1D4F28DD008F2A2C /* TabbarViewController2.m */; };
 		01CDC1511C2A3C9100D9AF53 /* AXWebViewController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 01CDC1501C2A3C9100D9AF53 /* AXWebViewController.bundle */; };
 		01CDC15D1C2A41DF00D9AF53 /* TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01CDC15C1C2A41DF00D9AF53 /* TableViewController.m */; };
-		0A908A211F7CE2DB00513380 /* AXWebViewController_framework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A908A1A1F7CE2DB00513380 /* AXWebViewController_framework.framework */; };
-		0A908A221F7CE2DB00513380 /* AXWebViewController_framework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0A908A1A1F7CE2DB00513380 /* AXWebViewController_framework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0A908A211F7CE2DB00513380 /* AXWebViewController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A908A1A1F7CE2DB00513380 /* AXWebViewController.framework */; };
+		0A908A221F7CE2DB00513380 /* AXWebViewController.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0A908A1A1F7CE2DB00513380 /* AXWebViewController.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0A908A271F7CE32300513380 /* AXWebViewController.h in Sources */ = {isa = PBXBuildFile; fileRef = 01513C051C28F90000CB8238 /* AXWebViewController.h */; };
 		0A908A281F7CE32300513380 /* AXWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01513C061C28F90000CB8238 /* AXWebViewController.m */; };
 		0A908A2A1F7CE32300513380 /* AXWebViewControllerActivity.h in Sources */ = {isa = PBXBuildFile; fileRef = DCABA01D1EC5FDFF005C7D31 /* AXWebViewControllerActivity.h */; };
@@ -32,7 +32,7 @@
 		0A908A311F7CE35800513380 /* AXWebViewControllerActivity.h in Headers */ = {isa = PBXBuildFile; fileRef = DCABA01D1EC5FDFF005C7D31 /* AXWebViewControllerActivity.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0A908A321F7CE35800513380 /* AXSecurityPolicy.h in Headers */ = {isa = PBXBuildFile; fileRef = DCABA0191EC5EE2A005C7D31 /* AXSecurityPolicy.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0ADCFE6024C6E33000636ABA /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0ADCFE5F24C6E33000636ABA /* Info.plist */; };
-		97F6BE6D557C0BB485DDCF88 /* libPods-AXWebViewController.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2642E682614F41BF460E7673 /* libPods-AXWebViewController.a */; };
+		1A588A69530EF6C9859CB0F8 /* libPods-AXWebViewController.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4338D5D19C05BCCB2D8F1F9 /* libPods-AXWebViewController.a */; };
 		DCA3C59F1FB0302F008DB632 /* FullScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA3C59E1FB0302F008DB632 /* FullScreenViewController.m */; };
 		DCABA01B1EC5EE2A005C7D31 /* AXSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = DCABA01A1EC5EE2A005C7D31 /* AXSecurityPolicy.m */; };
 		DCABA0231EC5FDFF005C7D31 /* AXWebViewControllerActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = DCABA01E1EC5FDFF005C7D31 /* AXWebViewControllerActivity.m */; };
@@ -56,7 +56,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				0A908A221F7CE2DB00513380 /* AXWebViewController_framework.framework in Embed Frameworks */,
+				0A908A221F7CE2DB00513380 /* AXWebViewController.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -66,7 +66,7 @@
 /* Begin PBXFileReference section */
 		013513EA1D60B83D003BDCEA /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		013513EB1D60B83D003BDCEA /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
-		01513BEB1C28F70700CB8238 /* AXWebViewController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AXWebViewController.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		01513BEB1C28F70700CB8238 /* AXWebViewControllerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AXWebViewControllerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		01513BEF1C28F70700CB8238 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		01513BF11C28F70700CB8238 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		01513BF21C28F70700CB8238 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -84,16 +84,15 @@
 		01CDC1501C2A3C9100D9AF53 /* AXWebViewController.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = AXWebViewController.bundle; path = AXWebViewController/AXWebViewController.bundle; sourceTree = "<group>"; };
 		01CDC15B1C2A41DF00D9AF53 /* TableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewController.h; sourceTree = "<group>"; };
 		01CDC15C1C2A41DF00D9AF53 /* TableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewController.m; sourceTree = "<group>"; };
-		0326F0589F0B7F449EE39607 /* Pods-AXWebViewController.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AXWebViewController.release.xcconfig"; path = "Pods/Target Support Files/Pods-AXWebViewController/Pods-AXWebViewController.release.xcconfig"; sourceTree = "<group>"; };
-		0A908A1A1F7CE2DB00513380 /* AXWebViewController_framework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AXWebViewController_framework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0A908A1A1F7CE2DB00513380 /* AXWebViewController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AXWebViewController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A908A381F7E1CAC00513380 /* libAspects.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libAspects.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A908A391F7E1CAC00513380 /* libAXIndicatorView.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libAXIndicatorView.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A908A3A1F7E1CAC00513380 /* libAXNavigationBackItemInjection.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libAXNavigationBackItemInjection.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A908A3B1F7E1CAC00513380 /* libAXPracticalHUD.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libAXPracticalHUD.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A908A3C1F7E1CAC00513380 /* libNJKWebViewProgress.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libNJKWebViewProgress.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0ADCFE5F24C6E33000636ABA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = AXWebViewController/Info.plist; sourceTree = "<group>"; };
-		2642E682614F41BF460E7673 /* libPods-AXWebViewController.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AXWebViewController.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		3B7311EC599653BFAAF42107 /* Pods-AXWebViewController.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AXWebViewController.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AXWebViewController/Pods-AXWebViewController.debug.xcconfig"; sourceTree = "<group>"; };
+		179612D6102509E2E4EFFA26 /* Pods-AXWebViewController.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AXWebViewController.release.xcconfig"; path = "Pods/Target Support Files/Pods-AXWebViewController/Pods-AXWebViewController.release.xcconfig"; sourceTree = "<group>"; };
+		3A22819E867C69B4F31CC8F3 /* Pods-AXWebViewController.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AXWebViewController.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AXWebViewController/Pods-AXWebViewController.debug.xcconfig"; sourceTree = "<group>"; };
 		A13CC1551E977227003AC1B2 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Main.strings"; sourceTree = "<group>"; };
 		A13CC1561E977227003AC1B2 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		DCA3C59D1FB0302F008DB632 /* FullScreenViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FullScreenViewController.h; sourceTree = "<group>"; };
@@ -103,6 +102,7 @@
 		DCABA01D1EC5FDFF005C7D31 /* AXWebViewControllerActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXWebViewControllerActivity.h; sourceTree = "<group>"; };
 		DCABA01E1EC5FDFF005C7D31 /* AXWebViewControllerActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXWebViewControllerActivity.m; sourceTree = "<group>"; };
 		DCCF48231E7987C9009CF38E /* Swift.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Swift.pdf; sourceTree = "<group>"; };
+		F4338D5D19C05BCCB2D8F1F9 /* libPods-AXWebViewController.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AXWebViewController.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,8 +111,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0197B9351D3F703300AF10F9 /* WebKit.framework in Frameworks */,
-				97F6BE6D557C0BB485DDCF88 /* libPods-AXWebViewController.a in Frameworks */,
-				0A908A211F7CE2DB00513380 /* AXWebViewController_framework.framework in Frameworks */,
+				0A908A211F7CE2DB00513380 /* AXWebViewController.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -120,6 +119,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A588A69530EF6C9859CB0F8 /* libPods-AXWebViewController.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -139,8 +139,8 @@
 		01513BEC1C28F70700CB8238 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				01513BEB1C28F70700CB8238 /* AXWebViewController.app */,
-				0A908A1A1F7CE2DB00513380 /* AXWebViewController_framework.framework */,
+				01513BEB1C28F70700CB8238 /* AXWebViewControllerDemo.app */,
+				0A908A1A1F7CE2DB00513380 /* AXWebViewController.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -186,8 +186,8 @@
 		0BC220E02B437FE0466F4248 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				3B7311EC599653BFAAF42107 /* Pods-AXWebViewController.debug.xcconfig */,
-				0326F0589F0B7F449EE39607 /* Pods-AXWebViewController.release.xcconfig */,
+				3A22819E867C69B4F31CC8F3 /* Pods-AXWebViewController.debug.xcconfig */,
+				179612D6102509E2E4EFFA26 /* Pods-AXWebViewController.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -201,7 +201,7 @@
 				0A908A3B1F7E1CAC00513380 /* libAXPracticalHUD.a */,
 				0A908A3C1F7E1CAC00513380 /* libNJKWebViewProgress.a */,
 				0197B9341D3F703300AF10F9 /* WebKit.framework */,
-				2642E682614F41BF460E7673 /* libPods-AXWebViewController.a */,
+				F4338D5D19C05BCCB2D8F1F9 /* libPods-AXWebViewController.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -265,11 +265,10 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		01513BEA1C28F70700CB8238 /* AXWebViewController */ = {
+		01513BEA1C28F70700CB8238 /* AXWebViewControllerDemo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 01513C021C28F70700CB8238 /* Build configuration list for PBXNativeTarget "AXWebViewController" */;
+			buildConfigurationList = 01513C021C28F70700CB8238 /* Build configuration list for PBXNativeTarget "AXWebViewControllerDemo" */;
 			buildPhases = (
-				43867203D586B50CBAAFDB18 /* [CP] Check Pods Manifest.lock */,
 				01513BE71C28F70700CB8238 /* Sources */,
 				01513BE81C28F70700CB8238 /* Frameworks */,
 				01513BE91C28F70700CB8238 /* Resources */,
@@ -280,15 +279,16 @@
 			dependencies = (
 				0A908A201F7CE2DB00513380 /* PBXTargetDependency */,
 			);
-			name = AXWebViewController;
+			name = AXWebViewControllerDemo;
 			productName = AXWebViewController;
-			productReference = 01513BEB1C28F70700CB8238 /* AXWebViewController.app */;
+			productReference = 01513BEB1C28F70700CB8238 /* AXWebViewControllerDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
-		0A908A191F7CE2DB00513380 /* AXWebViewController-framework */ = {
+		0A908A191F7CE2DB00513380 /* AXWebViewController */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0A908A251F7CE2DB00513380 /* Build configuration list for PBXNativeTarget "AXWebViewController-framework" */;
+			buildConfigurationList = 0A908A251F7CE2DB00513380 /* Build configuration list for PBXNativeTarget "AXWebViewController" */;
 			buildPhases = (
+				26FADA27C490B24F8E7C20A5 /* [CP] Check Pods Manifest.lock */,
 				0A908A151F7CE2DB00513380 /* Sources */,
 				0A908A161F7CE2DB00513380 /* Frameworks */,
 				0A908A171F7CE2DB00513380 /* Headers */,
@@ -299,9 +299,9 @@
 			);
 			dependencies = (
 			);
-			name = "AXWebViewController-framework";
+			name = AXWebViewController;
 			productName = "AXWebViewController-framework";
-			productReference = 0A908A1A1F7CE2DB00513380 /* AXWebViewController_framework.framework */;
+			productReference = 0A908A1A1F7CE2DB00513380 /* AXWebViewController.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -340,8 +340,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				01513BEA1C28F70700CB8238 /* AXWebViewController */,
-				0A908A191F7CE2DB00513380 /* AXWebViewController-framework */,
+				01513BEA1C28F70700CB8238 /* AXWebViewControllerDemo */,
+				0A908A191F7CE2DB00513380 /* AXWebViewController */,
 			);
 		};
 /* End PBXProject section */
@@ -385,16 +385,20 @@
 			shellPath = /bin/sh;
 			shellScript = "pod install\n#update\n";
 		};
-		43867203D586B50CBAAFDB18 /* [CP] Check Pods Manifest.lock */ = {
+		26FADA27C490B24F8E7C20A5 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			inputFileListPaths = (
 			);
 			inputPaths = (
 				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
 				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-AXWebViewController-checkManifestLockResult.txt",
 			);
@@ -440,7 +444,7 @@
 /* Begin PBXTargetDependency section */
 		0A908A201F7CE2DB00513380 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 0A908A191F7CE2DB00513380 /* AXWebViewController-framework */;
+			target = 0A908A191F7CE2DB00513380 /* AXWebViewController */;
 			targetProxy = 0A908A1F1F7CE2DB00513380 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -573,7 +577,6 @@
 		};
 		01513C031C28F70700CB8238 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3B7311EC599653BFAAF42107 /* Pods-AXWebViewController.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -591,7 +594,6 @@
 		};
 		01513C041C28F70700CB8238 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0326F0589F0B7F449EE39607 /* Pods-AXWebViewController.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -609,6 +611,7 @@
 		};
 		0A908A231F7CE2DB00513380 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3A22819E867C69B4F31CC8F3 /* Pods-AXWebViewController.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -647,6 +650,7 @@
 		};
 		0A908A241F7CE2DB00513380 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 179612D6102509E2E4EFFA26 /* Pods-AXWebViewController.release.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -695,7 +699,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		01513C021C28F70700CB8238 /* Build configuration list for PBXNativeTarget "AXWebViewController" */ = {
+		01513C021C28F70700CB8238 /* Build configuration list for PBXNativeTarget "AXWebViewControllerDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				01513C031C28F70700CB8238 /* Debug */,
@@ -704,7 +708,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0A908A251F7CE2DB00513380 /* Build configuration list for PBXNativeTarget "AXWebViewController-framework" */ = {
+		0A908A251F7CE2DB00513380 /* Build configuration list for PBXNativeTarget "AXWebViewController" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0A908A231F7CE2DB00513380 /* Debug */,
